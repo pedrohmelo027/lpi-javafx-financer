@@ -1,0 +1,16 @@
+com/gestaofinanceira/controller/MainController$4.class
+com/gestaofinanceira/model/Category.class
+com/gestaofinanceira/controller/MainController.class
+com/gestaofinanceira/MainApp.class
+com/gestaofinanceira/controller/MainController$2.class
+com/gestaofinanceira/controller/MainController$3.class
+com/gestaofinanceira/controller/MainController$7.class
+com/gestaofinanceira/controller/MainController$1.class
+com/gestaofinanceira/controller/MainController$6.class
+com/gestaofinanceira/model/Transaction.class
+com/gestaofinanceira/util/DatabaseConnection.class
+com/gestaofinanceira/service/FinanceService.class
+com/gestaofinanceira/controller/MainController$5.class
+com/gestaofinanceira/Launcher.class
+com/gestaofinanceira/model/InvestmentEvolution.class
+com/gestaofinanceira/repository/TransactionDAO.class
