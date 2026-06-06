@@ -233,6 +233,23 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 3);
 }
 
+/* Ensure all text inside KPI cards remains white/light in both dark and light themes */
+.kpi-card .label, .kpi-card .text {
+    -fx-text-fill: #ffffff;
+}
+
+.kpi-card .kpi-title {
+    -fx-text-fill: #e2e8f0;
+}
+
+.kpi-card .kpi-value {
+    -fx-text-fill: #ffffff;
+}
+
+.kpi-card .kpi-icon-container {
+    -fx-text-fill: #ffffff;
+}
+
 .kpi-income {
     -fx-background-color: linear-gradient(to bottom right, #064e3b, #022c22);
     -fx-border-color: #059669;
@@ -247,21 +264,31 @@
     -fx-background-color: linear-gradient(to bottom right, #1e3a8a, #172554);
     -fx-border-color: #3b82f6;
 }
-
 .kpi-balance {
-    -fx-background-color: linear-gradient(to bottom right, -color-card, -color-bg);
-    -fx-border-color: -color-border;
+    -fx-background-color: linear-gradient(to bottom right, #4c1d95, #2e1065);
+    -fx-border-color: #8b5cf6;
 }
 
-.kpi-balance-positive {
-    -fx-background-color: linear-gradient(to bottom right, #064e3b, #022c22);
-    -fx-border-color: #10b981;
+.kpi-balance .kpi-icon-container {
+    -fx-text-fill: #c084fc;
 }
 
-.kpi-balance-negative {
-    -fx-background-color: linear-gradient(to bottom right, #7f1d1d, #450a0a);
-    -fx-border-color: #f43f5e;
+.kpi-balance .kpi-title {
+    -fx-text-fill: #e2e8f0;
 }
+
+.kpi-balance .kpi-value {
+    -fx-text-fill: #ffffff;
+}
+
+.text-balance-positive {
+    -fx-text-fill: #4ade80;
+}
+
+.text-balance-negative {
+    -fx-text-fill: #f87171;
+}
+
 
 .kpi-icon-container {
     -fx-font-size: 1.38em; /* 18px */
@@ -281,7 +308,6 @@
     -fx-padding: 10px 0 0 0;
 }
 
-/* Controls */
 .modern-input, .modern-datepicker, .modern-combo {
     -fx-background-color: -color-input-bg;
     -fx-text-fill: -color-text;
@@ -290,6 +316,32 @@
     -fx-border-color: -color-border;
     -fx-border-radius: 6px;
     -fx-padding: 8px 12px;
+}
+
+/* Inner elements transparent styling to allow -color-input-bg to show through */
+.modern-input .content,
+.modern-input .scroll-pane,
+.modern-input .scroll-pane .viewport,
+.modern-datepicker > .text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-text;
+}
+
+.modern-input.text-area {
+    -fx-padding: 0;
+}
+
+.modern-input.text-area .content {
+    -fx-padding: 8px 12px;
+    -fx-background-color: transparent;
+}
+
+.modern-datepicker > .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.modern-datepicker > .arrow-button > .arrow {
+    -fx-background-color: -color-text-muted;
 }
 
 /* Fix text color inside combobox and list items */
@@ -458,19 +510,27 @@
 }
 
 /* Specific Bar Chart Colors */
-.chart-bar.default-color0 {
+.chart-bar.default-color0, .series0.chart-bar {
     -fx-bar-fill: #10b981; /* Receitas = Green */
 }
 
-.chart-bar.default-color1 {
+.chart-bar.default-color1, .series1.chart-bar {
     -fx-bar-fill: #ef4444; /* Despesas = Red */
 }
 
-.chart-bar.default-color2 {
+.chart-bar.default-color2, .series2.chart-bar {
     -fx-bar-fill: #3b82f6; /* Investimentos = Blue */
 }
 
-.default-color2.chart-legend-item-symbol {
+.default-color0.chart-legend-item-symbol, .series0.chart-legend-item-symbol {
+    -fx-background-color: #10b981;
+}
+
+.default-color1.chart-legend-item-symbol, .series1.chart-legend-item-symbol {
+    -fx-background-color: #ef4444;
+}
+
+.default-color2.chart-legend-item-symbol, .series2.chart-legend-item-symbol {
     -fx-background-color: #3b82f6;
 }
 
@@ -500,6 +560,42 @@
     -fx-padding: 4px 8px;
     -fx-font-size: 0.77em; /* 10px */
     -fx-cursor: hand;
+}
+
+.btn-action-income {
+    -fx-background-color: #10b981;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-action-income:hover {
+    -fx-background-color: #059669;
+}
+
+.btn-action-expense {
+    -fx-background-color: #ef4444;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-action-expense:hover {
+    -fx-background-color: #dc2626;
+}
+
+.btn-action-investment {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-action-investment:hover {
+    -fx-background-color: #2563eb;
 }
 
 /* Segmented Control for Tabela / Gráficos */
@@ -580,5 +676,39 @@
 .main-tabs > .tab-content-area {
     -fx-background-color: transparent;
     -fx-border-width: 0;
+}
+
+/* Ensure purple buttons and colored action buttons retain white text in both themes */
+.button.btn-primary,
+.button.btn-segmented-active,
+.button.btn-action-income,
+.button.btn-action-expense,
+.button.btn-action-investment,
+.button.btn-action-delete,
+.button.btn-primary:hover,
+.button.btn-segmented-active:hover,
+.button.btn-action-income:hover,
+.button.btn-action-expense:hover,
+.button.btn-action-investment:hover,
+.button.btn-action-delete:hover {
+    -fx-text-fill: #ffffff;
+}
+
+/* Light theme overrides to keep text white inside dark cards and purple buttons */
+.root-pane.light-theme .kpi-card .label,
+.root-pane.light-theme .kpi-card .text,
+.root-pane.light-theme .kpi-card .kpi-title,
+.root-pane.light-theme .kpi-card .kpi-value,
+.root-pane.light-theme .kpi-card .kpi-icon-container,
+.root-pane.light-theme .text-balance-positive,
+.root-pane.light-theme .text-balance-negative {
+    -fx-text-fill: #ffffff;
+}
+
+.root-pane.light-theme .button.btn-primary,
+.root-pane.light-theme .button.btn-segmented-active,
+.root-pane.light-theme .button.btn-primary:hover,
+.root-pane.light-theme .button.btn-segmented-active:hover {
+    -fx-text-fill: #ffffff;
 }
 

@@ -13,7 +13,12 @@ public class CategoriaFinanceira {
     public static final CategoriaFinanceira LAZER = new CategoriaFinanceira(4, "Lazer");
     public static final CategoriaFinanceira SALARIO = new CategoriaFinanceira(5, "Salário");
 
-    private static final List<CategoriaFinanceira> ALL_CATEGORIES = Arrays.asList(COMIDA, TRANSPORTE, CASA, LAZER, SALARIO);
+    private static final List<CategoriaFinanceira> ALL_CATEGORIES = new java.util.ArrayList<>(Arrays.asList(COMIDA, TRANSPORTE, CASA, LAZER, SALARIO));
+
+    public static void setCategories(List<CategoriaFinanceira> categories) {
+        ALL_CATEGORIES.clear();
+        ALL_CATEGORIES.addAll(categories);
+    }
 
     public CategoriaFinanceira() {}
 

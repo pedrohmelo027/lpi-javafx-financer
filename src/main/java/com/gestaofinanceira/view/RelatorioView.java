@@ -7,11 +7,6 @@ import com.gestaofinanceira.service.RelatorioMensalFactory;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.FileChooser;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,11 +58,11 @@ public class RelatorioView {
         lblTotalInvested.setText(String.format("R$ %,.2f", invested));
         lblBalance.setText(String.format("R$ %,.2f", balance));
 
-        cardBalance.getStyleClass().removeAll("kpi-balance-positive", "kpi-balance-negative");
+        lblBalance.getStyleClass().removeAll("text-balance-positive", "text-balance-negative");
         if (balance >= 0) {
-            cardBalance.getStyleClass().add("kpi-balance-positive");
+            lblBalance.getStyleClass().add("text-balance-positive");
         } else {
-            cardBalance.getStyleClass().add("kpi-balance-negative");
+            lblBalance.getStyleClass().add("text-balance-negative");
         }
 
         updateCharts(transacoes, year);
@@ -95,6 +90,15 @@ public class RelatorioView {
         }
 
         chartMonthlyComparison.getData().clear();
+        if (chartMonthlyComparison.getXAxis() instanceof CategoryAxis) {
+            CategoryAxis xAxis = (CategoryAxis) chartMonthlyComparison.getXAxis();
+            xAxis.getCategories().clear();
+            List<String> monthNames = new ArrayList<>();
+            for (String m : MONTHS) {
+                monthNames.add(m.substring(0, 3));
+            }
+            xAxis.getCategories().addAll(monthNames);
+        }
 
         List<Transacao> yearlyTransactions = transacoesPorAno(year);
 
@@ -142,50 +146,6 @@ public class RelatorioView {
                 .collect(Collectors.toList());
     }
 
-    public void solicitarRelatorio(int month, String monthName, int year, List<Transacao> currentPeriodTransactions, Stage stage) {
-        if (currentPeriodTransactions.isEmpty()) {
-            showFeedback("Aviso", "Não há transações no período selecionado para exportar.", Alert.AlertType.WARNING);
-            return;
-        }
-
-        RelatorioMensalFactory factory = new RelatorioMensalFactory(month, year);
-        Relatorio relatorio = relatorioController.processarRelatorio(factory);
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Salvar Relatório CSV");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos CSV (*.csv)", "*.csv"));
-        
-        String defaultFileName = String.format("relatorio_financeiro_%s_%d.csv", monthName.toLowerCase(), year);
-        fileChooser.setInitialFileName(defaultFileName);
-
-        File file = fileChooser.showSaveDialog(stage);
-
-        if (file != null) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write('\ufeff');
-                writer.write("Título: " + relatorio.getTitulo() + "\n");
-                writer.write("Total Receitas: R$ " + String.format("%.2f", relatorio.getTotalReceitas()) + "\n");
-                writer.write("Total Despesas: R$ " + String.format("%.2f", relatorio.getTotalDespesas()) + "\n");
-                writer.write("Total Investido: R$ " + String.format("%.2f", relatorio.getTotalInvestido()) + "\n");
-                writer.write("Saldo do Período: R$ " + String.format("%.2f", relatorio.getSaldo()) + "\n\n");
-                
-                writer.write("Data;Tipo;Categoria;Valor;Descrição\n");
-
-                for (Transacao t : relatorio.getTransacoes()) {
-                    writer.write(String.format("%s;%s;%s;%.2f;%s\n",
-                            t.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                            t.getTipo(),
-                            t.getCategoria().getNome(),
-                            t.getValor(),
-                            t.getDescricao() == null ? "" : t.getDescricao()
-                    ));
-                }
-                showFeedback("Sucesso", "Dados exportados com sucesso para:\n" + file.getAbsolutePath(), Alert.AlertType.INFORMATION);
-            } catch (IOException e) {
-                showFeedback("Erro ao Exportar", "Ocorreu um erro ao salvar o arquivo: " + e.getMessage(), Alert.AlertType.ERROR);
-            }
-        }
-    }
 
     private void showFeedback(String title, String message, Alert.AlertType type) {
         Alert alert = new Alert(type);

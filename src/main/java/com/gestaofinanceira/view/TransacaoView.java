@@ -35,7 +35,7 @@ public class TransacaoView {
     private final TextField txtAmount;
     private final DatePicker dpDate;
     private final ComboBox<CategoriaFinanceira> cbCategory;
-    private final TextField txtDescription;
+    private final TextArea txtDescription;
     private final Button btnSave;
     private final Button btnCancel;
 
@@ -58,7 +58,7 @@ public class TransacaoView {
             TextField txtAmount,
             DatePicker dpDate,
             ComboBox<CategoriaFinanceira> cbCategory,
-            TextField txtDescription,
+            TextArea txtDescription,
             Button btnSave,
             Button btnCancel
     ) {
@@ -209,6 +209,12 @@ public class TransacaoView {
     public void registrarDespesa() {
         resetForm();
         rbExpense.setSelected(true);
+        txtAmount.requestFocus();
+    }
+
+    public void registrarInvestimento() {
+        resetForm();
+        rbInvestment.setSelected(true);
         txtAmount.requestFocus();
     }
 

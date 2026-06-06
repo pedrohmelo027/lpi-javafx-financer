@@ -19,6 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.chart.LineChart?>
@@ -171,7 +172,7 @@
                                                                 <!-- Action Buttons (+ Nova Receita, + Nova Despesa) -->
                                                                 <Button fx:id="btnNewIncome" onAction="#handleNewIncome" styleClass="btn-action-income" text="+ Nova Receita" />
                                                                 <Button fx:id="btnNewExpense" onAction="#handleNewExpense" styleClass="btn-action-expense" text="+ Nova Despesa" />
-                                                                <Button fx:id="btnExportCSV" onAction="#handleExportCSV" styleClass="btn-secondary" text="📥 CSV" />
+                                                                <Button fx:id="btnNewInvestment" onAction="#handleNewInvestment" styleClass="btn-action-investment" text="+ Novo Investimento" />
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -263,6 +264,7 @@
                                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <children>
                                                         
@@ -301,18 +303,23 @@
                                                         </VBox>
                                                         
                                                         <!-- Categoria -->
-                                                        <VBox spacing="5.0" GridPane.rowIndex="2">
+                                                        <VBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                                             <children>
                                                                 <Label styleClass="form-label" text="Categoria" wrapText="true" />
-                                                                <ComboBox fx:id="cbCategory" prefWidth="180.0" promptText="Selecione" styleClass="modern-combo" />
+                                                                <HBox alignment="CENTER_LEFT" spacing="5.0">
+                                                                    <children>
+                                                                        <ComboBox fx:id="cbCategory" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" promptText="Selecione" styleClass="modern-combo" />
+                                                                        <Button fx:id="btnAddCategory" onAction="#handleNewCategory" prefHeight="35.0" prefWidth="35.0" style="-fx-font-weight: bold; -fx-font-size: 1.1em;" styleClass="btn-secondary" text="+" />
+                                                                    </children>
+                                                                </HBox>
                                                             </children>
                                                         </VBox>
                                                         
                                                         <!-- Descrição -->
-                                                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                        <VBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                                             <children>
                                                                 <Label styleClass="form-label" text="Descrição (Opcional)" wrapText="true" />
-                                                                <TextField fx:id="txtDescription" promptText="Ex: Mercado" styleClass="modern-input" />
+                                                                <TextArea fx:id="txtDescription" prefRowCount="3" promptText="Ex: Mercado" styleClass="modern-input" wrapText="true" />
                                                             </children>
                                                         </VBox>
                                                         
@@ -353,227 +360,7 @@
                     </content>
                 </Tab>
                 
-                <!-- Tab 2: Simulador de Investimentos -->
-                <Tab text="📈 Simulador de Investimentos">
-                    <content>
-                        <HBox spacing="20.0">
-                            <padding>
-                                <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
-                            </padding>
-                            <children>
-                                
-                                <!-- Left Panel: Results, Chart & Table (65% width) -->
-                                <VBox spacing="20.0" HBox.hgrow="ALWAYS" prefWidth="800.0">
-                                    <children>
-                                        
-                                        <!-- KPI Cards -->
-                                        <HBox spacing="15.0">
-                                            <children>
-                                                <!-- Total Invested Card -->
-                                                <VBox styleClass="kpi-card, kpi-invested" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <children>
-                                                                <Label styleClass="kpi-icon-container" text="💰" wrapText="true" />
-                                                                <Label styleClass="kpi-title" text="Total Investido" wrapText="true" />
-                                                            </children>
-                                                        </HBox>
-                                                        <Label fx:id="lblSimTotalInvested" styleClass="kpi-value" text="R$ 0,00" wrapText="true" />
-                                                    </children>
-                                                </VBox>
-                                                
-                                                <!-- Total Interest Card -->
-                                                <VBox styleClass="kpi-card, kpi-income" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <children>
-                                                                <Label styleClass="kpi-icon-container" text="✨" wrapText="true" />
-                                                                <Label styleClass="kpi-title" text="Rendimento em Juros" wrapText="true" />
-                                                            </children>
-                                                        </HBox>
-                                                        <Label fx:id="lblSimTotalInterest" styleClass="kpi-value" text="R$ 0,00" wrapText="true" />
-                                                    </children>
-                                                </VBox>
-                                                
-                                                <!-- Final Balance Card -->
-                                                <VBox styleClass="kpi-card, kpi-balance-positive" HBox.hgrow="ALWAYS">
-                                                    <children>
-                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                                            <children>
-                                                                <Label styleClass="kpi-icon-container" text="📈" wrapText="true" />
-                                                                <Label styleClass="kpi-title" text="Montante Final Bruto" wrapText="true" />
-                                                            </children>
-                                                        </HBox>
-                                                        <Label fx:id="lblSimFinalBalance" styleClass="kpi-value" text="R$ 0,00" wrapText="true" />
-                                                    </children>
-                                                </VBox>
-                                            </children>
-                                        </HBox>
-                                        
-                                        <!-- Visualization Container -->
-                                        <VBox styleClass="card-container" VBox.vgrow="ALWAYS">
-                                            <padding>
-                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                            </padding>
-                                            <children>
-                                                <HBox alignment="CENTER_LEFT" styleClass="card-header">
-                                                    <VBox.margin>
-                                                        <Insets bottom="10.0" />
-                                                    </VBox.margin>
-                                                    <children>
-                                                        <HBox alignment="CENTER_LEFT" spacing="15.0">
-                                                            <children>
-                                                                <Label styleClass="card-title" text="Evolução do Patrimônio" wrapText="true" />
-                                                                <!-- View Switcher -->
-                                                                <HBox spacing="5.0" styleClass="segmented-control">
-                                                                    <children>
-                                                                        <Button fx:id="btnSimViewChart" onAction="#handleShowSimChart" styleClass="btn-segmented, btn-segmented-active" text="📈 Gráfico" />
-                                                                        <Button fx:id="btnSimViewTable" onAction="#handleShowSimTable" styleClass="btn-segmented" text="📋 Tabela" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </HBox>
-                                                    </children>
-                                                </HBox>
-                                                
-                                                <StackPane VBox.vgrow="ALWAYS">
-                                                    <children>
-                                                        <!-- Evolution Chart -->
-                                                        <LineChart fx:id="chartSimEvolution" legendSide="BOTTOM" styleClass="modern-chart" title="Evolução Acumulada do Investimento" VBox.vgrow="ALWAYS">
-                                                            <xAxis>
-                                                                <CategoryAxis fx:id="axisSimPeriod" label="Período" side="BOTTOM" />
-                                                            </xAxis>
-                                                            <yAxis>
-                                                                <NumberAxis fx:id="axisSimAmount" label="Valor (R$)" side="LEFT" />
-                                                            </yAxis>
-                                                        </LineChart>
-                                                        
-                                                        <!-- Evolution Table -->
-                                                        <TableView fx:id="tvSimEvolution" styleClass="modern-table" visible="false" managed="false">
-                                                            <columns>
-                                                                <TableColumn fx:id="colSimPeriod" prefWidth="80.0" text="Período" />
-                                                                <TableColumn fx:id="colSimInitial" prefWidth="120.0" text="Saldo Inicial" />
-                                                                <TableColumn fx:id="colSimContribution" prefWidth="100.0" text="Aporte" />
-                                                                <TableColumn fx:id="colSimInterest" prefWidth="110.0" text="Juros do Mês" />
-                                                                <TableColumn fx:id="colSimFinal" prefWidth="130.0" text="Saldo Final" />
-                                                                <TableColumn fx:id="colSimTotalInvested" prefWidth="130.0" text="Total Investido" />
-                                                                <TableColumn fx:id="colSimTotalInterest" prefWidth="130.0" text="Juros Acumulados" />
-                                                            </columns>
-                                                            <columnResizePolicy>
-                                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                            </columnResizePolicy>
-                                                        </TableView>
-                                                    </children>
-                                                </StackPane>
-                                            </children>
-                                        </VBox>
-                                        
-                                    </children>
-                                </VBox>
-                                
-                                <!-- Right Panel: Simulator Inputs (35% width) -->
-                                <VBox spacing="20.0" prefWidth="440.0" minWidth="400.0">
-                                    <children>
-                                        <VBox styleClass="card-container, form-card">
-                                            <padding>
-                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                            </padding>
-                                            <children>
-                                                <Label styleClass="card-title" text="Simular Investimento" wrapText="true">
-                                                    <VBox.margin>
-                                                        <Insets bottom="12.0" />
-                                                    </VBox.margin>
-                                                </Label>
-                                                
-                                                <GridPane hgap="10.0" vgap="12.0">
-                                                    <columnConstraints>
-                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    </columnConstraints>
-                                                    <rowConstraints>
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                    </rowConstraints>
-                                                    <children>
-                                                        <!-- Starting Amount -->
-                                                        <VBox spacing="5.0" GridPane.columnSpan="2">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Valor Inicial (R$)" wrapText="true" />
-                                                                <TextField fx:id="txtSimInitialAmount" promptText="Ex: 1000,00" styleClass="modern-input" />
-                                                            </children>
-                                                        </VBox>
-                                                        
-                                                        <!-- Monthly Contribution -->
-                                                        <VBox spacing="5.0" GridPane.rowIndex="1" GridPane.columnSpan="2">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Aporte Mensal (R$)" wrapText="true" />
-                                                                <TextField fx:id="txtSimMonthlyContribution" promptText="Ex: 100,00" styleClass="modern-input" />
-                                                            </children>
-                                                        </VBox>
-                                                        
-                                                        <!-- Interest Rate -->
-                                                        <VBox spacing="5.0" GridPane.rowIndex="2">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Taxa de Juros (%)" wrapText="true" />
-                                                                <TextField fx:id="txtSimInterestRate" promptText="Ex: 1,0 ou 12,0" styleClass="modern-input" />
-                                                            </children>
-                                                        </VBox>
-                                                        
-                                                        <!-- Rate Type (Mensal / Anual) -->
-                                                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Tipo de Juros" wrapText="true" />
-                                                                <HBox spacing="10.0" alignment="CENTER_LEFT" prefHeight="40.0">
-                                                                    <children>
-                                                                        <RadioButton fx:id="rbSimMonthly" selected="true" styleClass="modern-radio" text="Mensal">
-                                                                            <toggleGroup>
-                                                                                <ToggleGroup fx:id="tgSimInterestType" />
-                                                                            </toggleGroup>
-                                                                        </RadioButton>
-                                                                        <RadioButton fx:id="rbSimAnnual" styleClass="modern-radio" text="Anual" toggleGroup="$tgSimInterestType" />
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
-                                                        </VBox>
-                                                        
-                                                        <!-- Period Count -->
-                                                        <VBox spacing="5.0" GridPane.rowIndex="3">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Período" wrapText="true" />
-                                                                <TextField fx:id="txtSimPeriod" promptText="Ex: 12" styleClass="modern-input" />
-                                                            </children>
-                                                        </VBox>
-                                                        
-                                                        <!-- Period Unit (Meses / Anos) -->
-                                                        <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                            <children>
-                                                                <Label styleClass="form-label" text="Unidade do Período" wrapText="true" />
-                                                                <ComboBox fx:id="cbSimPeriodType" prefWidth="180.0" styleClass="modern-combo" />
-                                                            </children>
-                                                        </VBox>
-                                                    </children>
-                                                </GridPane>
-                                                
-                                                <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                                                    <VBox.margin>
-                                                        <Insets top="20.0" />
-                                                    </VBox.margin>
-                                                    <children>
-                                                        <Button onAction="#handleClearSim" styleClass="btn-secondary" text="Limpar" />
-                                                        <Button onAction="#handleCalculateSim" styleClass="btn-primary" text="Calcular" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-                                    </children>
-                                </VBox>
-                                
-                            </children>
-                        </HBox>
-                    </content>
-                </Tab>
+
             </tabs>
         </TabPane>
     </center>

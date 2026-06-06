@@ -124,8 +124,6 @@ public class TransacaoDAO {
         
         if ("ENTRADA".equals(type)) {
             return new Receita(id, amount, category, dateTime, description);
-        } else if ("SAÍDA".equals(type)) {
-            return new Despesa(id, amount, category, dateTime, description);
         } else if ("INVESTIMENTO".equals(type)) {
             return new Investimento(id, amount, category, dateTime, description);
         } else {
