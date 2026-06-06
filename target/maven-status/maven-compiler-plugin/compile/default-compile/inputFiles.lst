@@ -2,8 +2,8 @@
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/model/Investimento.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/view/TransacaoView.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/util/DatabaseConnection.java
-/home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/RelatorioFactory.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/controller/TransacaoController.java
+/home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/RelatorioFactory.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/model/Transacao.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/model/Receita.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/util/ConnectionFactory.java
@@ -14,8 +14,8 @@
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/CategoriaService.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/RelatorioAnualFactory.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/RelatorioMensalFactory.java
-/home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/view/RelatorioView.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/view/MenuView.java
+/home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/view/RelatorioView.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/service/RelatorioService.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/repository/TransacaoDAO.java
 /home/pedro/Documentos/Faculdade/LIP1/src/main/java/com/gestaofinanceira/repository/CategoriaDAO.java
