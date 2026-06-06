@@ -6,27 +6,43 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:sqlite:finance.db";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL);
+        return ConnectionFactory.getConnection();
+    }
+
+    private static void bootstrapDatabase() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Driver MySQL não encontrado: " + e.getMessage());
+        }
+        String urlWithoutDb = "jdbc:mysql://localhost:3306/?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+        try (Connection conn = DriverManager.getConnection(urlWithoutDb, "root", "");
+             Statement stmt = conn.createStatement()) {
+            stmt.execute("CREATE DATABASE IF NOT EXISTS finance");
+        } catch (SQLException e) {
+            System.err.println("Aviso ao inicializar o servidor de banco de dados MySQL: " + e.getMessage());
+            System.err.println("Certifique-se de que o servidor MySQL está rodando no localhost:3306 para o usuário root.");
+        }
     }
 
     public static void initializeDatabase() {
+        bootstrapDatabase();
+
         String sql = "CREATE TABLE IF NOT EXISTS transactions ("
-                   + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                   + "id INT PRIMARY KEY AUTO_INCREMENT,"
                    + "amount DOUBLE NOT NULL,"
-                   + "type TEXT NOT NULL,"
-                   + "category TEXT NOT NULL,"
-                   + "date TEXT NOT NULL,"
+                   + "type VARCHAR(50) NOT NULL,"
+                   + "category VARCHAR(50) NOT NULL,"
+                   + "date VARCHAR(50) NOT NULL,"
                    + "description TEXT"
                    + ");";
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Tabela transactions criada ou já existente.");
         } catch (SQLException e) {
-            System.err.println("Erro ao inicializar o banco de dados: " + e.getMessage());
+            System.err.println("Erro ao inicializar tabelas no banco de dados MySQL: " + e.getMessage());
         }
     }
 }

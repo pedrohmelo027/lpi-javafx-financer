@@ -26,7 +26,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 
 
-<BorderPane fx:id="rootPane" prefHeight="800.0" prefWidth="1280.0" styleClass="root-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestaofinanceira.controller.MainController">
+<BorderPane fx:id="rootPane" prefHeight="800.0" prefWidth="1280.0" styleClass="root-pane" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gestaofinanceira.view.MenuView">
     
     <!-- Top Header Bar -->
     <top>
